@@ -14,7 +14,7 @@
                 var map = L.map(idName).setView(latLng, zoom);
                 var tileUrl = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
                 var linkUrl = "https://maps.gsi.go.jp/development/ichiran.html";
-                var copyUrl = "<a href=¥'" + linkUrl + "¥' target=¥'_blank¥'>地理院タイル(標準地図)</a>";
+                var copyUrl = "<a href=¥"" + linkUrl + "¥" target=¥"_blank¥">地理院タイル(標準地図)</a>";
                 var gsi1 = L.tileLayer(tileUrl, {attribution: copyUrl}).addTo(map);
                 $.getJSON("N06-22_HighwaySection.geojson", function(data){
                     L.geoJson(data).bindPopup(function(m){
