@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>GISとjsonの利用</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                var latLng = [35.35265534169483, 139.47366802671525];
+                var zoom = 10;
+                var idName = "map";
+                var map = L.map(idName).setView(latLng, zoom);
+                var tileUrl = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
+                var linkUrl = "https://maps.gsi.go.jp/development/ichiran.html";
+                var copyUrl = "<a href=¥'" + linkUrl + "¥' target=¥'_blank¥'>地理院タイル(標準地図)</a>";
+                var gsi1 = L.tileLayer(tileUrl, {attribution: copyUrl}).addTo(map);
+
+                $.getJSON("N03-20240101_14.geojson", function(data){
+                    L.getJSON(data).bindPopup(function(m){
+                        if(m.feature.properties.N03_005 == null)
+                            return(m.feature.properties.N03_007 + ":" + m.feature.properties.N03_001 + m.feature.properties.N03_004)
+                        else
+                            return(m.feature.properties.N03_007 + ":" + m.feature.properties.N03_001 + m.feature.properties.N03_004 + m.feature.properties.N03_005)
+                    });
+                });
+
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="map" style="width: 800px; height: 600px;"></div>
+    </body>
+</html>
